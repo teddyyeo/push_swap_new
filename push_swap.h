@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tayeo <tayeo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tayeo <tayeo@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 15:05:57 by tayeo             #+#    #+#             */
-/*   Updated: 2022/11/17 06:54:54 by tayeo            ###   ########.fr       */
+/*   Updated: 2022/11/17 15:05:03 by tayeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,5 @@ void	small_sort(t_stack *a, t_stack *b);
 void	sort_three(t_stack *a);
 void	sort_four(t_stack *a, t_stack *b, int min);
 void	sort_five(t_stack *a, t_stack *b);
+void	sort_n(t_stack *a, t_stack *b, int min);
 #endif

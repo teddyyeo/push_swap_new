@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tayeo <tayeo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tayeo <tayeo@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 13:20:01 by tayeo             #+#    #+#             */
-/*   Updated: 2022/11/17 07:06:33 by tayeo            ###   ########.fr       */
+/*   Updated: 2022/11/17 14:58:58 by tayeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,18 @@ void	input_checker(int argc, char **argv)
 	{
 		idx = 0;
 		c = argv[argc - 1][idx];
+		if (c != '-' && !ft_isdigit(c))
+		{
+			ft_printf("Error1\n");
+			exit(0);
+		}
 		while (c)
 		{
-			if (!ft_isdigit(c) && c != '-' && !(c > 8 && c < 14) && c != ' ')
+			if (!ft_isdigit(c) && idx != 0)
+			{
+				ft_printf("Error2\n");
 				exit(0);
+			}
 			idx++;
 			c = argv[argc - 1][idx];
 		}
@@ -32,6 +40,28 @@ void	input_checker(int argc, char **argv)
 	}
 }
 
+void check_dupe(t_stack a)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < a.size -1)
+	{
+		j = i + 1;
+		while (j < a.size)
+		{
+			if (a.stk[i] == a.stk[j])
+			{
+				ft_printf("Error3\n");
+				exit(0);
+			}
+			j++;
+		}
+		i++;
+	}
+
+}
 int	ft_atoi_new(const char *str, char *flag)
 {
 	int	sign;
@@ -42,10 +72,7 @@ int	ft_atoi_new(const char *str, char *flag)
 	while ((*str > 8 && *str < 14) || *str == ' ')
 		str++;
 	if (*str == '+' || *str == '-')
-	{
-		sign *= (44 - *str);
-		str++;
-	}
+		sign *= (44 - *str++);
 	while (*str >= '0' && *str <= '9')
 	{
 		if (num > 214748364)
@@ -58,6 +85,23 @@ int	ft_atoi_new(const char *str, char *flag)
 	}
 	num *= sign;
 	return (num);
+}
+
+void print_stack(t_stack a, t_stack b)
+{
+	int i = 0;
+	while (i < a.size || i < b.size)
+	{
+		if (i < a.size && i < b.size)
+			ft_printf("%d       %d\n", a.stk[i], b.stk[i]);
+		else if (i < a.size)
+			ft_printf("%d\n", a.stk[i]);
+		else if (i < b.size)
+			ft_printf("        %d\n", b.stk[i]);
+		i++;
+	}
+	ft_printf("--      --\n");
+	ft_printf("a       b\n\n");
 }
 
 int	main(int argc, char **argv)
@@ -81,16 +125,19 @@ int	main(int argc, char **argv)
 		a.stk[argc - 2] = ft_atoi_new(argv[argc - 1], &flag);
 		if (flag == 1)
 		{
-			ft_printf("Error\nNumber is not int\n");
+			ft_printf("Error4\n");
 			return (0);
 		}
 		argc--;
 	}
+	check_dupe(a);
+	normalize(a.stk, a.size);
 	if (check_sorted(a))
 		exit(0);
-	normalize(a.stk, a.size);
-	small_sort(&a, &b);
-	radix(&a, &b);
+	sort_n(&a, &b);
+	print_stack(a, b);
+	//small_sort(&a, &b);
+	//radix(&a, &b);
 	free(a.stk);
 	free(b.stk);
 	return (0);

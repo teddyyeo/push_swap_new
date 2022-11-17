@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   small_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tayeo <tayeo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tayeo <tayeo@student.42seoul.kr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 04:47:57 by tayeo             #+#    #+#             */
-/*   Updated: 2022/11/17 06:50:07 by tayeo            ###   ########.fr       */
+/*   Updated: 2022/11/17 15:04:38 by tayeo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,32 @@ void	sort_five(t_stack *a, t_stack *b)
 	push_b(a, b);
 	sort_four(a, b, 1);
 	push_a(a, b);
+}
+
+void	sort_n(t_stack *a, t_stack *b, int min)
+{
+	int	i;
+
+	i = 0;
+	while(a->stk[i] != min)
+		i++;
+	ft_printf("found min at %d\n", i);
+	if (i <= (a->size - 1) / 2)
+	{
+		while (i > 0)
+		{
+			rot_a(a);
+			i--;
+		}
+	}
+	else
+	{
+		i = a->size - i;
+		while (i > 0)
+		{
+			rev_rot_a(a);
+			i--;
+		}
+	}
+	push_b(a, b);
 }
